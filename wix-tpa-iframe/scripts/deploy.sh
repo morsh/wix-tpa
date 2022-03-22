@@ -1,0 +1,1 @@
+surge ./build wix-tpa-iframe.surge.sh

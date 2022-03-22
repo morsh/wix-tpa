@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "workspaces": [
+    "wix-tpa-container",
+    "wix-tpa-iframe"
+  ]
+}
