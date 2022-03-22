@@ -9,9 +9,8 @@ export function initialize() {
 
 export const sayHello = (): Promise<string> => api.sayHello();
 
-// export const getContainerParams = (): Promise<any> => api.getContainerParams();
-export const subscribeContainerParams = (subscriber: any) => {
-  api.subscribeContainerParams(proxy(subscriber));
+export const onContainerParamsChanged = (cb: (params: any) => void) => {
+  api.onContainerParamsChanged(proxy(cb));
 }
 
 export { getInstance } from './instance';

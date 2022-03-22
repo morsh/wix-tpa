@@ -22,7 +22,8 @@ function App() {
       <header className="App-header">
         Wix TPA Container App
       </header>
-      <select onChange={handleChange}>
+      <label>Choose params to pass to iframe:</label>
+      <select style={{ marginLeft: 10, marginTop: 20 }} onChange={handleChange}>
         {contacts.map(contact => <option key={contact.id} value={contact.id}>{contact.name}</option>)}
       </select>
       <ParentMessageBridge params={option}/>

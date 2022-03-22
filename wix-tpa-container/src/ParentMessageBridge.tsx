@@ -10,7 +10,7 @@ export const ParentMessageBridge = ({ params }: Props) => {
 
   const apiMethods = useMemo(() => ({
     sayHello() { return 'Hello from ' + window.location.href },
-    subscribeContainerParams(subscriber: any) {
+    onContainerParamsChanged(subscriber: any) {
       setParamsSubscribers([...containerParamsSubscribers, subscriber]);
       console.log(params);
       subscriber(params);
@@ -27,10 +27,9 @@ export const ParentMessageBridge = ({ params }: Props) => {
   }, [params]);
 
   return (
-    <div>
-      <h3>Iframe:</h3>
-      {/* <iframe title='title' id='child-iframe' src='https://wix-tpa-iframe.surge.sh/' /> */}
-      <iframe title='title' id='child-iframe' src='http://localhost:3001/?instance=SOME_INSANCE' />
+    <div style={{ padding: 20 }}>
+      <iframe title='title' id='child-iframe' src='https://wix-tpa-iframe.surge.sh/?instance=SOME_INSANCE' />
+      {/* <iframe title='title' id='child-iframe' src='http://localhost:3001/?instance=SOME_INSANCE' /> */}
     </div>
   );
 }

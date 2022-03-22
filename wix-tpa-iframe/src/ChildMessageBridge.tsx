@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { initialize, sayHello, getInstance, subscribeContainerParams } from './sdk/windowSdk';
+import { initialize, sayHello, getInstance, onContainerParamsChanged } from './sdk/windowSdk';
 
 export const ChildMessageBridge = () => {
   const [state, setState] = useState('');
@@ -11,20 +11,19 @@ export const ChildMessageBridge = () => {
     initialize();
     sayHello().then(setState);
     getInstance().then(setInstance);
-    subscribeContainerParams((params: any) => {
+    onContainerParamsChanged((params: any) => {
       setParams(params);
     });
   }, []);
 
   return (
-    <div>
-      Child Bridge.
+    <div style={{ textAlign: 'left' }}>
       <br/>
-      Message: {state}
+      <h4>Simple message from parent window: </h4>{state}
       <br/>
-      Instance: {instance}
+      <h4>Get instance from URL params: </h4>{instance}
       <br/>
-      Container Params: {JSON.stringify(params)}
+      <h4>Subscribe to container params: </h4>{JSON.stringify(params)}
     </div>
   )
 }
