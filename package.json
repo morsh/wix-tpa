@@ -1,5 +1,10 @@
 {
+  "name": "wix-tpa-monorepo",
   "private": true,
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "deploy": "yarn build && yarn workspaces run deploy"
+  },
   "workspaces": [
     "wix-tpa-container",
     "wix-tpa-iframe"
