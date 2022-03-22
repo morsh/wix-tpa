@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { expose, windowEndpoint } from 'comlink';
 
-export const ParentMessageBridge = () => {
-  // const iframeLoaded = useCallback(async () => {
-  //   console.log('...')
-  //   const iframeElement = document.getElementById('child-iframe') as HTMLIFrameElement;
-  //   const api = Comlink.proxy<any>(iframeElement.contentWindow);
-  //   const newMessage = await api.doThing();
-  //   setMessages([
-  //     ...messages,
-  //     newMessage
-  //   ]);
-  // }, [messages]);
+type Props = {
+  params: any;
+}
+
+export const ParentMessageBridge = ({ params }: Props) => {
+  const [containerParamsSubscribers, setParamsSubscribers] = useState<any[]>([]);
+
+  const apiMethods = useMemo(() => ({
+    sayHello() { return 'Hello from ' + window.location.href },
+    subscribeContainerParams(subscriber: any) {
+      setParamsSubscribers([...containerParamsSubscribers, subscriber]);
+      console.log(params);
+      subscriber(params);
+    }
+  }), []);
 
   useEffect(() => {
-    console.log('...')
     const iframeElement = document.getElementById('child-iframe') as HTMLIFrameElement;
-    expose({
-      sayHello() { return 'Hello from ' + window.location.href }
-    }, windowEndpoint(iframeElement.contentWindow!));
+    expose(apiMethods, windowEndpoint(iframeElement.contentWindow!));
   }, []);
+
+  useEffect(() => {
+    containerParamsSubscribers.forEach(sub => sub(params));
+  }, [params]);
 
   return (
     <div>
       <h3>Iframe:</h3>
-      <iframe title='title' id='child-iframe' src='https://wix-tpa-iframe.surge.sh/' />
+      {/* <iframe title='title' id='child-iframe' src='https://wix-tpa-iframe.surge.sh/' /> */}
+      <iframe title='title' id='child-iframe' src='http://localhost:3001/?instance=SOME_INSANCE' />
     </div>
   );
 }

@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { proxy, windowEndpoint, wrap,  } from 'comlink';
+import { initialize, sayHello, getInstance, subscribeContainerParams } from './sdk/windowSdk';
 
 export const ChildMessageBridge = () => {
   const [state, setState] = useState('');
+  const [instance, setInstance] = useState<string | null>();
+  const [params, setParams] = useState<any>();
+  
   useEffect(() => {
-    console.log('...2');
-    const api = wrap(windowEndpoint(window.parent)) as any;
-    console.log('...3', api);
-    api.sayHello().then((msg: string) => setState(msg));
+    console.log('Initialize SDK via child iframe...');
+    initialize();
+    sayHello().then(setState);
+    getInstance().then(setInstance);
+    subscribeContainerParams((params: any) => {
+      setParams(params);
+    });
   }, []);
 
   return (
@@ -15,6 +21,10 @@ export const ChildMessageBridge = () => {
       Child Bridge.
       <br/>
       Message: {state}
+      <br/>
+      Instance: {instance}
+      <br/>
+      Container Params: {JSON.stringify(params)}
     </div>
   )
 }
