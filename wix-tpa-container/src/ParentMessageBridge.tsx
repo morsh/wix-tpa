@@ -9,7 +9,7 @@ export const ParentMessageBridge = ({ params }: Props) => {
   const [containerParamsSubscribers, setParamsSubscribers] = useState<any[]>([]);
 
   const apiMethods = useMemo(() => ({
-    sayHello() { return 'Hello from ' + window.location.href },
+    getParentUrl() { return window.location.href },
     onContainerParamsChanged(subscriber: any) {
       setParamsSubscribers([...containerParamsSubscribers, subscriber]);
       console.log(params);

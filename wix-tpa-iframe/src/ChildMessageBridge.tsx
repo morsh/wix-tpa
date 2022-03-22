@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { initialize, sayHello, getInstance, onContainerParamsChanged } from './sdk/windowSdk';
+import { initialize, getParentUrl, getInstance, onContainerParamsChanged } from './sdk/windowSdk';
 
 export const ChildMessageBridge = () => {
   const [state, setState] = useState('');
@@ -9,7 +9,7 @@ export const ChildMessageBridge = () => {
   useEffect(() => {
     console.log('Initialize SDK via child iframe...');
     initialize();
-    sayHello().then(setState);
+    getParentUrl().then(setState);
     getInstance().then(setInstance);
     onContainerParamsChanged((params: any) => {
       setParams(params);
@@ -19,7 +19,7 @@ export const ChildMessageBridge = () => {
   return (
     <div style={{ textAlign: 'left' }}>
       <br/>
-      <h4>Simple message from parent window: </h4>{state}
+      <h4>Get url from parent window: </h4>{state}
       <br/>
       <h4>Get instance from URL params: </h4>{instance}
       <br/>

@@ -7,7 +7,7 @@ export function initialize() {
   api = wrap<DashboardSDK>(windowEndpoint(window.parent));
 }
 
-export const sayHello = (): Promise<string> => api.sayHello();
+export const getParentUrl = (): Promise<string> => api.getParentUrl();
 
 export const onContainerParamsChanged = (cb: (params: any) => void) => {
   api.onContainerParamsChanged(proxy(cb));

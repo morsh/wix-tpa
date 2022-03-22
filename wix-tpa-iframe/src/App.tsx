@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Child Bridge Iframe
+        Child Bridge Iframe with url: [{window.location.href}]
       </header>
       <ChildMessageBridge />
     </div>

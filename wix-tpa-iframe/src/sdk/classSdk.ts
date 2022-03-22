@@ -9,8 +9,8 @@
 //     this.api = wrap<DashboardSDK>(windowEndpoint(window.parent));
 //   }
 
-//   sayHello(): Promise<string> {
-//     return this.api.sayHello();
+//   getParentUrl(): Promise<string> {
+//     return this.api.getParentUrl();
 //   }
 
 //   subscribeContainerParams(subscriber: any): void {
