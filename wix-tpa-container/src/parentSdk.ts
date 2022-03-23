@@ -20,20 +20,10 @@ export function createSdkProvider(iframeElement: HTMLIFrameElement, apiMethods: 
 
     const { port1, port2 } = new MessageChannel();
     if (version === '4.3.0') {
-      const msg = {
-        comlinkInit: true,
-        port: port2
-      };
       expose0(apiMethods, port1);
-      iframeElement.contentWindow!.postMessage(msg, '*', [port2]);
     } else {
-      console.log(version);
-      const msg = {
-        comlinkInit: true,
-        port: port2
-      };
       expose1(apiMethods, port1);
-      iframeElement.contentWindow!.postMessage(msg, '*', [port2]);
     }
+    iframeElement.contentWindow!.postMessage({ comlinkInit: true }, '*', [port2]);
   });
 }

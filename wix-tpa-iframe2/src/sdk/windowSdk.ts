@@ -11,7 +11,7 @@ export async function initialize() {
       console.log(window.location.origin, event);
       if (event.data.comlinkInit) {
         console.log('>>>>>>>>>>', window.location.origin, event, event.data.port);
-        api = wrap<DashboardSDK>(event.data.port);
+        api = wrap<DashboardSDK>(event.ports[0]);
         resolve(api);
       }
     });

@@ -10,7 +10,7 @@ export async function initialize() {
     window.addEventListener("message", (event) => {
       console.log(window.location.origin, event);
       if (event.data.comlinkInit) {
-        api = wrap<DashboardSDK>(event.data.port);
+        api = wrap<DashboardSDK>(event.ports[0]);
         console.log(api);
         resolve(api);
       }
