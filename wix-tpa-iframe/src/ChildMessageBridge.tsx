@@ -11,10 +11,7 @@ export const ChildMessageBridge = () => {
     initialize().then(() => {
       getParentUrl().then(setState);
       getInstance().then(setInstance);
-      onContainerParamsChanged((params: any) => {
-        console.log(params);
-        setParams(params);
-      });
+      onContainerParamsChanged(setParams);
     });
   }, []);
 

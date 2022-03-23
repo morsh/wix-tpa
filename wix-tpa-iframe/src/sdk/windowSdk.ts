@@ -1,4 +1,4 @@
-import { windowEndpoint, wrap, Remote, proxy } from "comlink";
+import { wrap, Remote, proxy } from "comlink";
 import { DashboardSDK } from "./dashboardSdk";
 
 const COMLINK_VERSION = '4.3.0';
@@ -8,10 +8,9 @@ export async function initialize() {
   return new Promise(resolve => {
     window.parent.postMessage({ type: 'wix-tpa-initialize', version: COMLINK_VERSION }, '*');
     window.addEventListener("message", (event) => {
-      console.log(window.location.origin, event);
       if (event.data.comlinkInit) {
         api = wrap<DashboardSDK>(event.ports[0]);
-        console.log(api);
+        console.log(window.location.origin, 'initialized comlink');
         resolve(api);
       }
     });

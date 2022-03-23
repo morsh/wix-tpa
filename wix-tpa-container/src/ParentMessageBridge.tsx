@@ -9,35 +9,21 @@ const containerParamsSubscribers: any[] = [];
 
 export const ParentMessageBridge = ({ params }: Props) => {
 
-  const apiMethods = useMemo(() => ({
+  const apiMethods = {
     getParentUrl() {
-      console.log('get parent url');
       return window.location.href;
     },
     onContainerParamsChanged(subscriber: any) {
-      console.log(subscriber, params, 1);
       containerParamsSubscribers.push(subscriber);
       subscriber(params);
     }
-  }), []);
-
-  const apiMethods2 = useMemo(() => ({
-    getParentUrl() {
-      console.log('get parent url 2');
-      return window.location.href;
-    },
-    onContainerParamsChanged(subscriber: any) {
-      console.log(subscriber, params, 2);
-      containerParamsSubscribers.push(subscriber);
-      subscriber(params);
-    }
-  }), []);
+  };
 
   useEffect(() => {
     const iframeElement = document.getElementById('child-iframe') as HTMLIFrameElement;
     const iframeElement2 = document.getElementById('child-iframe2') as HTMLIFrameElement;
     createSdkProvider(iframeElement, apiMethods);
-    createSdkProvider(iframeElement2, apiMethods2);
+    createSdkProvider(iframeElement2, apiMethods);
   }, []);
 
   useEffect(() => {
