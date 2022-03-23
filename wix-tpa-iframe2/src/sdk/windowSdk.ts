@@ -4,10 +4,18 @@ import { DashboardSDK } from "./dashboardSdk";
 const COMLINK_VERSION = '4.3.1';
 let api: Remote<DashboardSDK>;
 
-export function initialize() {
-  console.log('listenning ' + COMLINK_VERSION);
-  window.parent.postMessage({ type: 'wix-tpa-initialize', version: COMLINK_VERSION }, '*');
-  api = wrap<DashboardSDK>(windowEndpoint(window.parent));
+export async function initialize() {
+  return new Promise(resolve => {
+    window.parent.postMessage({ type: 'wix-tpa-initialize', version: COMLINK_VERSION }, '*');
+    window.addEventListener("message", (event) => {
+      console.log(window.location.origin, event);
+      if (event.data.comlinkInit) {
+        console.log('>>>>>>>>>>', window.location.origin, event, event.data.port);
+        api = wrap<DashboardSDK>(event.data.port);
+        resolve(api);
+      }
+    });
+  });
 }
 
 export const getParentUrl = (): Promise<string> => api.getParentUrl();

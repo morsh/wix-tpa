@@ -8,12 +8,13 @@ export const ChildMessageBridge = () => {
   
   useEffect(() => {
     console.log('Initialize SDK via child iframe...');
-    initialize();
-    getParentUrl().then(setState);
-    getInstance().then(setInstance);
-    onContainerParamsChanged((params: any) => {
-      console.log(params);
-      setParams(params);
+    initialize().then(() => {
+      getParentUrl().then(setState);
+      getInstance().then(setInstance);
+      onContainerParamsChanged((params: any) => {
+        console.log(params);
+        setParams(params);
+      });
     });
   }, []);
 
