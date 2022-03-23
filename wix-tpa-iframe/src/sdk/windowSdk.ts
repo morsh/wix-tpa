@@ -1,11 +1,12 @@
 import { windowEndpoint, wrap, Remote, proxy } from "comlink";
 import { DashboardSDK } from "./dashboardSdk";
 
-const COMLINK_VERSION = '4.3.1';
+const COMLINK_VERSION = '4.3.0';
 let api: Remote<DashboardSDK>;
 
-export async function initialize() {
+export function initialize() {
   console.log('listenning ' + COMLINK_VERSION);
+  window.parent.postMessage({ type: 'wix-tpa-initialize', version: COMLINK_VERSION }, '*');
   api = wrap<DashboardSDK>(windowEndpoint(window.parent));
 }
 
