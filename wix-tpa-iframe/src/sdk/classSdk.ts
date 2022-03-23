@@ -2,15 +2,11 @@
 // import { DashboardSDK } from "./dashboardSdk";
 // import { getInstance } from "./instance";
 
-// export class DashboardSDKInstance implements DashboardSDK {
-//   private api: Remote<DashboardSDK>;
+// export function createDashboardSDK() {
+//   const api = wrap<DashboardSDK>(windowEndpoint(window.parent));
 
-//   constructor() {
-//     this.api = wrap<DashboardSDK>(windowEndpoint(window.parent));
-//   }
-
-//   getParentUrl(): Promise<string> {
-//     return this.api.getParentUrl();
+//   function getParentUrl(): Promise<string> {
+//     return api.getParentUrl();
 //   }
 
 //   subscribeContainerParams(subscriber: any): void {
