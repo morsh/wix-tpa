@@ -7,6 +7,7 @@
   },
   "workspaces": [
     "wix-tpa-container",
-    "wix-tpa-iframe"
+    "wix-tpa-iframe",
+    "wix-tpa-iframe2"
   ]
 }
