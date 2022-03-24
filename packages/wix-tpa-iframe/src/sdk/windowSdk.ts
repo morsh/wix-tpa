@@ -1,26 +1,32 @@
-import { wrap, Remote, proxy } from "comlink";
+import { wrap, proxy } from "comlink";
 import { DashboardSDK } from "./dashboardSdk";
+import { iframeHandshake } from 'channel-bridge-picker';
+import { getInstance } from './instance';
 
+const BRIDGE_TYPE = 'comlink';
 const COMLINK_VERSION = '4.3.0';
-let api: Remote<DashboardSDK>;
+
+const dashboardApiFactory = (port: MessagePort) => {
+  const api = wrap<DashboardSDK>(port);
+  console.log(window.location.origin, 'initialized comlink');
+
+  const getParentUrl = (): Promise<string> => api.getParentUrl();
+  
+  const onContainerParamsChanged = (cb: (params: any) => void) => {
+    api.onContainerParamsChanged(proxy(cb));
+  }
+
+  const getChannelVersion = () => ({ bridgeType: BRIDGE_TYPE, version: COMLINK_VERSION });
+  
+  return {
+    getChannelVersion,
+    getInstance,
+    getParentUrl,
+    onContainerParamsChanged
+  };
+}
 
 export async function initialize() {
-  return new Promise(resolve => {
-    window.parent.postMessage({ type: 'wix-tpa-initialize', version: COMLINK_VERSION }, '*');
-    window.addEventListener("message", (event) => {
-      if (event.data.comlinkInit) {
-        api = wrap<DashboardSDK>(event.ports[0]);
-        console.log(window.location.origin, 'initialized comlink');
-        resolve(api);
-      }
-    });
-  });
+  const port = await iframeHandshake(BRIDGE_TYPE, COMLINK_VERSION);
+  return dashboardApiFactory(port);
 }
-
-export const getParentUrl = (): Promise<string> => api.getParentUrl();
-
-export const onContainerParamsChanged = (cb: (params: any) => void) => {
-  api.onContainerParamsChanged(proxy(cb));
-}
-
-export { getInstance } from './instance';

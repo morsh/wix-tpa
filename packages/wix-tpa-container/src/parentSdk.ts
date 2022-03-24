@@ -1,28 +1,21 @@
-import { expose as expose0 } from 'comlink/4.3.0';
-import { expose as expose1 } from 'comlink/4.3.1';
+import { expose as expose430 } from 'comlink/4.3.0';
+import { expose as expose431 } from 'comlink/4.3.1';
+import { parentHandshake } from 'channel-bridge-picker';
 
-export function createSdkProvider(iframeElement: HTMLIFrameElement, apiMethods: any) {
-  let initialize: (this: Window, ev: MessageEvent<any>) => any;
-  new Promise(resolve => {
-    initialize = event => {
-      if (event.origin === new URL(iframeElement.src).origin) {
-        if (event.data.type === 'wix-tpa-initialize') {
-          resolve(event.data.version);
-        }
+export async function createSdkProvider(iframeElement: HTMLIFrameElement, apiMethods: any) {
+  await parentHandshake(iframeElement, ({ bridgeType, version, port }) => {
+    if (bridgeType === 'comlink') {
+      if (version === '4.3.0') {
+        expose430(apiMethods, port);
+        return;
+      } else if (version === '4.3.1') {
+        expose431(apiMethods, port);
+        return;
       }
-    };
 
-    window.addEventListener('message', initialize, false);
-  })
-  .then(version => {
-    window.removeEventListener('message', initialize);
-
-    const { port1, port2 } = new MessageChannel();
-    if (version === '4.3.0') {
-      expose0(apiMethods, port1);
-    } else {
-      expose1(apiMethods, port1);
+      throw new Error(`Parent doesn't support comlink bridge with version ${version}`);
     }
-    iframeElement.contentWindow!.postMessage({ comlinkInit: true }, '*', [port2]);
+
+    throw new Error(`Parent doesn't support bridge ${bridgeType}`);
   });
 }
