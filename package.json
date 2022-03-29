@@ -5,9 +5,10 @@
     "build": "yarn workspaces run build",
     "deploy": "yarn build && yarn workspaces run deploy"
   },
-  "workspaces": [
-    "wix-tpa-container",
-    "wix-tpa-iframe",
-    "wix-tpa-iframe2"
-  ]
+  "workspaces": {
+    "packages": [
+      "packages/*"  
+    ],
+    "nohoist": ["**/wix-dashboard-iframe-sdk", "**/wix-dashboard-iframe-sdk/**"]
+  }
 }
