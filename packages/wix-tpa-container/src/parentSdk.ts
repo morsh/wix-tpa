@@ -1,6 +1,6 @@
-import { expose as expose430 } from 'comlink/4.3.0';
-import { expose as expose431 } from 'comlink/4.3.1';
-import { parentHandshake } from 'channel-bridge-picker';
+import { expose as expose430 } from 'comlink-4.3.0';
+import { expose as expose431 } from 'comlink-4.3.1';
+import { parentHandshake } from './parentHandshake';
 
 export async function createSdkProvider(iframeElement: HTMLIFrameElement, apiMethods: any) {
   await parentHandshake(iframeElement, ({ bridgeType, version, port }) => {

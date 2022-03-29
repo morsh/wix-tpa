@@ -8,6 +8,7 @@
   "workspaces": {
     "packages": [
       "packages/*"  
-    ]
+    ],
+    "nohoist": ["**/wix-dashboard-iframe-sdk", "**/wix-dashboard-iframe-sdk/**"]
   }
 }
