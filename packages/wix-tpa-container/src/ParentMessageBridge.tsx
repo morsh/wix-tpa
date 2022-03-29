@@ -5,18 +5,21 @@ type Props = {
   params: any;
 }
 
-const containerParamsSubscribers: any[] = [];
+const metaSiteId = 'SOME_MSID';
+const envUpdatedSubscribers: any[] = [];
 
 export const ParentMessageBridge = ({ params }: Props) => {
 
+  const envParams = {
+    containerParams: params,
+    metaSiteId: metaSiteId,
+  };
+
   const apiMethods = {
-    getParentUrl() {
-      return window.location.href;
+    onEnvUpdated(subscriber: any) {
+      envUpdatedSubscribers.push(subscriber);
+      subscriber(envParams);
     },
-    onContainerParamsChanged(subscriber: any) {
-      containerParamsSubscribers.push(subscriber);
-      subscriber(params);
-    }
   };
 
   useEffect(() => {
@@ -27,15 +30,15 @@ export const ParentMessageBridge = ({ params }: Props) => {
   }, []);
 
   useEffect(() => {
-    containerParamsSubscribers.forEach(sub => sub(params));
+    envUpdatedSubscribers.forEach(sub => sub(envParams));
   }, [params]);
 
   return (
     <div style={{ padding: 20 }}>
-      {/* <iframe title='title' id='child-iframe' src='https://wix-tpa-iframe.surge.sh/?instance=SOME_INSANCE' />
-      <iframe title='title2' id='child-iframe2' src='https://wix-tpa-iframe2.surge.sh/?instance=SOME_INSANCE_2' /> */}
-      <iframe title='title' id='child-iframe' src='http://localhost:3001/?instance=SOME_INSANCE' />
-      <iframe title='title2' id='child-iframe2' src='http://localhost:3002/?instance=SOME_INSANCE_2' />
+      <iframe title='title' id='child-iframe' src='https://wix-tpa-iframe.surge.sh/?instance=SOME_INSANCE' />
+      <iframe title='title2' id='child-iframe2' src='https://wix-tpa-iframe2.surge.sh/?instance=SOME_INSANCE_2' />
+      {/* <iframe title='title' id='child-iframe' src='http://localhost:3001/?instance=SOME_INSANCE' />
+      <iframe title='title2' id='child-iframe2' src='http://localhost:3002/?instance=SOME_INSANCE_2' /> */}
     </div>
   );
 }

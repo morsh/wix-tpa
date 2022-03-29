@@ -8,7 +8,6 @@
   "workspaces": {
     "packages": [
       "packages/*"  
-    ],
-    "nohoist": ["**/comlink", "**/comlink/**"]
+    ]
   }
 }

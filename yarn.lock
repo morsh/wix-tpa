@@ -2815,6 +2815,15 @@ chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0, chalk@^4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
+channel-bridge-picker@^0.1.0:
+  version "0.1.0"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/channel-bridge-picker/-/channel-bridge-picker-0.1.0.tgz#2bdf9d8812a166208d2fccab1a6ed4f7b9d4ab71"
+  integrity sha1-K9+diBKhZiCNL8yrGm7U97nUq3E=
+  dependencies:
+    "@types/jest" "^27.4.1"
+    "@types/node" "^16.11.26"
+    typescript "^4.6.2"
+
 char-regex@^1.0.2:
   version "1.0.2"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
@@ -2946,14 +2955,12 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
-"comlink/4.3.0@npm:comlink@4.3.0", comlink@4.3.0:
-  name comlink/4.3.0
+comlink@4.3.0:
   version "4.3.0"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/comlink/-/comlink-4.3.0.tgz#80b3366baccd87897dab3638ebfcfae28b2f87c7"
   integrity sha1-gLM2a6zNh4l9qzY46/z64osvh8c=
 
-"comlink/4.3.1@npm:comlink@4.3.1", comlink@4.3.1:
-  name comlink/4.3.1
+comlink@4.3.1:
   version "4.3.1"
   resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/comlink/-/comlink-4.3.1.tgz#0c6b9d69bcd293715c907c33fe8fc45aecad13c5"
   integrity sha1-DGudabzSk3FckHwz/o/EWuytE8U=
@@ -8512,6 +8519,20 @@ which@^2.0.1:
   integrity sha1-fGqN0KY2oDJ+ELWckobu6T8/UbE=
   dependencies:
     isexe "^2.0.0"
+
+wix-dashboard-iframe-sdk@1.0.3:
+  version "1.0.3"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/wix-dashboard-iframe-sdk/-/wix-dashboard-iframe-sdk-1.0.3.tgz#785c44780aab873c30bb40500f0e8f0222c4495c"
+  integrity sha1-eFxEeAqrhzwwu0BQDw6PAiLESVw=
+  dependencies:
+    comlink "4.3.0"
+
+wix-dashboard-iframe-sdk@1.0.4:
+  version "1.0.4"
+  resolved "https://repo.dev.wixpress.com/artifactory/api/npm/npm-repos/wix-dashboard-iframe-sdk/-/wix-dashboard-iframe-sdk-1.0.4.tgz#46928ad20cf9eb6f523b1cf72f970c715a839dbc"
+  integrity sha1-RpKK0gz5629SOxz3L5cMcVqDnbw=
+  dependencies:
+    comlink "4.3.1"
 
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"

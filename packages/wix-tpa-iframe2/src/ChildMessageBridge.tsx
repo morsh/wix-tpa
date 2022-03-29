@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { initialize } from './sdk/windowSdk';
+import { initialize } from 'wix-dashboard-iframe-sdk';
 
 export const ChildMessageBridge = () => {
-  const [state, setState] = useState('');
   const [instance, setInstance] = useState<string | null>();
   const [params, setParams] = useState<any>();
+  const [metasiteId, setMetasiteId] = useState<any>();
   const [version, setVersion] = useState<any>();
   
   useEffect(() => {
     console.log('Initialize SDK via child iframe...');
     initialize().then((api) => {
-      api.getParentUrl().then(setState);
       api.getInstance().then(setInstance);
-      api.onContainerParamsChanged(setParams);
+      api.onEnvUpdated(envData => {
+        setParams(envData.containerParams);
+        setMetasiteId(envData.metaSiteId);
+      });
       setVersion(JSON.stringify(api.getChannelVersion()));
     });
   }, []);
@@ -22,7 +24,7 @@ export const ChildMessageBridge = () => {
       <br/>
       <h4>Version: </h4>{version}
       <br/>
-      <h4>Get url from parent window: </h4>{state}
+      <h4>Metasite id: </h4>{metasiteId}
       <br/>
       <h4>Get instance from URL params: </h4>{instance}
       <br/>

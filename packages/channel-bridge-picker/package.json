@@ -12,7 +12,8 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.json",
-    "test": "jest test"
+    "test": "jest test",
+    "deploy": ":"
   },
   "eslintConfig": {
     "extends": [

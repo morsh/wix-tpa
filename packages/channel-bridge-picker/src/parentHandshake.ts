@@ -4,8 +4,8 @@ type InitializeChannelCb = (param: ChannelInitializationData) => Promise<any> | 
 
 export async function parentHandshake(iframeElement: HTMLIFrameElement, initializeChannel: InitializeChannelCb): Promise<void> {
   const { bridgeType, version }: HandshakeMessage = await new Promise(resolve => {
-    const initialize: (ev: MessageEvent<any>) => any = ({ origin, data }) => {
-      if (origin === new URL(iframeElement.src).origin) {
+    const initialize: (ev: MessageEvent<any>) => any = ({ source, data }) => {
+      if (source === iframeElement.contentWindow) {
         if (data.type === ChannelPickerMessageType) {
           window.removeEventListener('message', initialize);
           resolve(data);

@@ -10,10 +10,8 @@ const dashboardApiFactory = (port: MessagePort) => {
   const api = wrap<DashboardSDK>(port);
   console.log(window.location.origin, 'initialized comlink');
 
-  const getParentUrl = (): Promise<string> => api.getParentUrl();
-  
-  const onContainerParamsChanged = (cb: (params: any) => void) => {
-    api.onContainerParamsChanged(proxy(cb));
+  const onEnvUpdated = (cb: (params: any) => void) => {
+    api.onEnvUpdated(proxy(cb));
   }
 
   const getChannelVersion = () => ({ bridgeType: BRIDGE_TYPE, version: COMLINK_VERSION });
@@ -21,8 +19,7 @@ const dashboardApiFactory = (port: MessagePort) => {
   return {
     getChannelVersion,
     getInstance,
-    getParentUrl,
-    onContainerParamsChanged
+    onEnvUpdated
   };
 }
 
