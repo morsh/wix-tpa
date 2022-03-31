@@ -33,12 +33,19 @@ export const ParentMessageBridge = ({ params }: Props) => {
     envUpdatedSubscribers.forEach(sub => sub(envParams));
   }, [params]);
 
+  if (process.env.NODE_ENV === 'development') {
+    return (
+      <div style={{ padding: 20 }}>
+        <iframe title='title' id='child-iframe' src='http://localhost:3001/?instance=SOME_INSANCE' />
+        <iframe title='title2' id='child-iframe2' src='http://localhost:3002/?instance=SOME_INSANCE_2' />
+      </div>
+    );
+  }
+
   return (
     <div style={{ padding: 20 }}>
       <iframe title='title' id='child-iframe' src='https://wix-tpa-iframe.surge.sh/?instance=SOME_INSANCE' />
       <iframe title='title2' id='child-iframe2' src='https://wix-tpa-iframe2.surge.sh/?instance=SOME_INSANCE_2' />
-      {/* <iframe title='title' id='child-iframe' src='http://localhost:3001/?instance=SOME_INSANCE' />
-      <iframe title='title2' id='child-iframe2' src='http://localhost:3002/?instance=SOME_INSANCE_2' /> */}
     </div>
   );
 }
