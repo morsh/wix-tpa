@@ -3,25 +3,19 @@ import { HandshakeMessage, ChannelPickerMessageType, EstablishConnectionMessage,
 type InitializeChannelCb = (param: ChannelInitializationData) => Promise<any> | void;
 
 export async function parentHandshake(iframeElement: HTMLIFrameElement, initializeChannel: InitializeChannelCb): Promise<void> {
-  const { bridgeType, version }: HandshakeMessage = await new Promise(resolve => {
-    const initialize: (ev: MessageEvent<any>) => any = ({ source, data }) => {
+  const { bridgeType, version, port }: HandshakeMessage = await new Promise(resolve => {
+    const initialize: (ev: MessageEvent<any>) => any = ({ source, data, ports }) => {
       if (source === iframeElement.contentWindow) {
         if (data.type === ChannelPickerMessageType) {
           window.removeEventListener('message', initialize);
-          resolve(data);
+          resolve({...data, port: ports[0] });
         }
       }
     };
 
-    window.addEventListener('message', initialize, false);
+    window.addEventListener('message', initialize);
   });
 
-
-  const { port1, port2 } = new MessageChannel();
-  await initializeChannel({
-    bridgeType,
-    version,
-    port: port1
-  })
-  iframeElement.contentWindow!.postMessage(EstablishConnectionMessage, '*', [port2]);
+  await initializeChannel({ bridgeType, version, port })
+  port.postMessage(EstablishConnectionMessage);
 }

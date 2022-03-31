@@ -2,13 +2,20 @@
   "name": "wix-tpa-monorepo",
   "private": true,
   "scripts": {
-    "build": "yarn workspaces run build",
-    "deploy": "yarn build && yarn workspaces run deploy"
+    "build": "yarn workspaces foreach run build",
+    "start": "yarn workspaces foreach -pt run start",
+    "deploy": "yarn workspaces foreach run deploy"
   },
   "workspaces": {
     "packages": [
-      "packages/*"  
+      "packages/*"
     ],
-    "nohoist": ["**/wix-dashboard-iframe-sdk", "**/wix-dashboard-iframe-sdk/**"]
-  }
+    "nohoist": [
+      "**/wix-dashboard-iframe-sdk",
+      "**/wix-dashboard-iframe-sdk/**",
+      "**/comlink",
+      "**/comlink**"
+    ]
+  },
+  "packageManager": "yarn@3.2.0"
 }
